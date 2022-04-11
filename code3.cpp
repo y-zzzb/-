@@ -1,25 +1,35 @@
 #include<bits/stdc++.h>
 using namespace std;
-int main() {
-    int n,total=0;
-    string str="";
-    cin>>n;
-    while(n!=1)
+string S;
+int step_min=INT_MAX;
+void dfs(int n,string str,int step)
+{
+    if(n==1)
     {
-        if(n%2!=0)
+        if(step_min>step)
         {
-            n--;
-            total++;
-            str=str+'-';
+            step_min=step;
+            S=str;
         }
+        return;
+    }
+    else
+    {
+        if(n%2==0)
+        dfs(n/2,str+'^',step+1);
         else
         {
-            n=n/2;
-            total++;
-            str=str+'^';
+            dfs(n-1,str+'-',step+1);
+            dfs(n+1,str+'+',step+1);
         }
     }
-    cout<<total<<endl;
-    cout<<str;
+}
+int main()
+{
+    int n;
+    string s;
+    cin>>n;
+    dfs(n,s,0);
+    cout<<S;
     return 0;
 }
